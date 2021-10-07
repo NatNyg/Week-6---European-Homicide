@@ -79,11 +79,60 @@ ggplot(data = Western_Europe) +
 
 1) the column name Western_Europe$`Homicide rate in Europe over long-term (per 100,000) is not very easy to work with. Relabel it to 'homicides' for easier use in the ggplots.
 
+```{r rename column}
+names(Western_Europe)[4] <- "Homicides"
+
+```
+
+After using the head function earlier to inspect the data, I know the Homicide column is the fourth in the dataset - using the index, I can choose the exact column and rename it. 
+
 2) The facet is great, but geom_point(scatterplot) is not the best choice for showing long-term data. Can you create other type of visualisation for a long-term trend? 
+
+```{r visualizing long-term data}
+ggplot(data = Western_Europe) + 
+  geom_line(mapping = aes(x = Year, 
+                           y = Homicides, 
+                           color = Entity)) +
+  labs(x = "Year",
+       y = "Number of Homicides per 100,000 people",
+       title = "Homicide rate in Europe from 1300-2000")
+```
+
+Using the geom_line I am able to style the visualisation in a better manner to show the long term trend. 
 
 3) Can you change the facet layout to two columns and three rows so that the trends are more visible? 
 
+```{r changing the facet}
+ggplot(data = Western_Europe) + 
+  geom_point(mapping = aes(x = Year, 
+                           y = Homicides, 
+                           color = Entity)) +
+  facet_wrap(~ Homicides, ncol = 2) +
+  facet_wrap(~ Year, nrow =  3) +
+  labs(x = "Year",
+       y = "Number of Homicides per 100,000 people",
+       title = "Homicide rate in Europe from 1300-2000")
+```
+
+Using the facet_wrap and taking the variables as arguments, then defining how many rows and collumns I want visualized.
+
 4) Move the legend from the current position on the side to below the facets, and label it "Country" instead of "Entity".
+
+```{r changing the legend}
+ggplot(data = Western_Europe) + 
+  geom_point(mapping = aes(x = Year, 
+                           y = Homicides, 
+                           color = Entity)) +
+  theme(legend.position = "bottom") +
+  labs(color = "Country") +
+  facet_wrap(~ Homicides, ncol = 2) +
+  facet_wrap(~ Year, nrow =  3) +
+  labs(x = "Year",
+       y = "Number of Homicides per 100,000 people",
+       title = "Homicide rate in Europe from 1300-2000")
+```
+Using the theme function to change the legend position to the bottom, and then using the labs function to change the name of the legend to "Country"
 
 5) Add a floating table of contents to your Rmarkdown document, provide informative chunk-names to all your R chunks, and automatically generate a timestamp to show when the document was last updated. 
 
+Not sure how to add timestamps 
